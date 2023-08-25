@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/x-icon" href="./R.png">
+    <title>Weather APP</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <nav class="bg-primary container p-1 pt-3 border border-info mt-5" style="border-radius: 0px 50px 0px 50px;">
+        <h1 class="text-center">
+            <a href="#" class="text-light">
+                <img src="R.png" alt="logo" class="img-fulid" width="100px">
+                Weather App
+            </a>
+        </h1>
+    </nav>
+
+    <div class="container">
+        <h3 class="text-center font-monospace fw-bold">Enter Here City Name</h3>
+        <div class="row justify-content-center mt-3">
+            <input id="city" class="form-control w-50 border-dark fs-2 shadow p-3 mb-3 bg-body rounded" type="search"
+                placeholder="Search" aria-label="Search">
+        </div>
+        <div class="row justify-content-center mt-1">
+            <button class="btn btn-primary my-sm-0 w-25 fs-1" id="submit" type="submit">Search</button>
+        </div>
+
+
+        <h2 class="my-4">
+            Weather For <span id="cityName"></span>
+        </h2>
+        <div class="card-deck mb-3 text-center">
+            <div class="card mb-4 shadow-sm border-primary">
+                <div class="card-header bg-primary">
+                    <h4 class="my-0 font-weight-bold text-light">Temperatures</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title"><span id="temp2"></span><small class="text-muted">
+                            °C</small></h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>Temperature is <span id="temp"></span></li>
+                        <li>Min Temperature is <span id="min_temp"></span></li>
+                        <li>Max Temperature is <span id="max_temp"></span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card mb-4 shadow-sm border-primary">
+                <div class="card-header bg-primary">
+                    <h4 class="my-0 font-weight-bold text-light">Humidity Info</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title"><span id="humidity2"></span><small class="text-muted">
+                            %</small></h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>Wind Degree is <span id="wind_degrees"></span></li>
+                        <li>Cloud PCT is <span id="cloud_pct"></span></li>
+                        <li>Feels Like is <span id="feels_like"></span></li>
+                        <li>Humidity is <span id="humidity"></span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card mb-4 shadow-sm border-primary">
+                <div class="card-header bg-primary">
+                    <h4 class="my-0 font-weight-bold text-light">Wind Info</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title"><span id="wind_speed2"></span><small class="text-muted">
+                            km/hr</small></h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>Wind Speed is <span id="wind_speed"></span></li>
+                        <li>Sunrise Time is <span id="sunrise"></span></li>
+                        <li>Sunset Time is <span id="sunset"></span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const options = {
+            method: 'GET',
+            headers: {
+                'X-RapidAPI-Key': 'cb75830f28mshad1afe8a0fb0c2ap190a62jsn8e355def28f4',
+                'X-RapidAPI-Host': 'weather-by-api-ninjas.p.rapidapi.com'
+            }
+        };
+        const getWeather = (city) => {
+            cityName.innerHTML = city
+            fetch('https://weather-by-api-ninjas.p.rapidapi.com/v1/weather?city=' + city, options)
+                .then(response => response.json())
+                .then((response) => {
+                    console.log(response)
+                    cloud_pct.innerHTML = response.cloud_pct
+                    temp.innerHTML = response.temp
+                    temp2.innerHTML = response.temp
+                    feels_like.innerHTML = response.feels_like
+                    humidity.innerHTML = response.humidity
+                    humidity2.innerHTML = response.humidity
+                    min_temp.innerHTML = response.min_temp
+                    max_temp.innerHTML = response.max_temp
+                    wind_speed.innerHTML = response.wind_speed
+                    wind_speed2.innerHTML = response.wind_speed
+                    wind_degrees.innerHTML = response.wind_degrees
+                    sunrise.innerHTML = response.sunrise
+                    sunset.innerHTML = response.sunset
+                })
+                .catch(err => console.error(err));
+        }
+
+        submit.addEventListener("click", (e) => {
+            e.preventDefault();
+            getWeather(city.value);
+        })
+
+        getWeather("Nagpur")
+    </script>
+
+</body>
+
+</html>
